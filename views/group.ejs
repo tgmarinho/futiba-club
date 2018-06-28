@@ -38,7 +38,9 @@
 
     <section class="content">
         <div class="container">
-            <h2>Grupos: <%= group.name %></h2>
+            <h2>Grupos:
+                <%= group.name %>
+            </h2>
 
             <% if(group.role === 'owner') { %>
                 <% if(pendings.length > 0) { %>
@@ -58,7 +60,7 @@
                                         <%= user.id %>
                                     </th>
                                     <td>
-                                       <%= user.name %>
+                                        <%= user.name %>
                                     </td>
                                     <td>
                                         <%= user.role %>
@@ -87,8 +89,41 @@
                                 <% if(group.role === 'pending') { %>
                                     <p class="alert alert-info">Você precisa ser aprovado pelo dono do grupo.</p>
                                     <% } else { %>
-                                        <p>Usuário normal</p>
-                                   <%  } %>
+                                      <pre>  <%= JSON.stringify(games) %> </pre>
+                                        <form method="post">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Jogos</th>
+                                                        <th>Pontuação</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% games.forEach( game => { %>
+                                                        <tr>
+                                                            <td>
+                                                                <% if(game.guess_a) { %>
+                                                                    <%= game.guess_a %>
+                                                                 <% }  else { %>   
+                                                                <input class="form-control" name="team_<%= game.id %>[a]">
+                                                                <% } %>
+                                                                    <%= game.team_a %> vs
+                                                                    <%= game.team_b %>
+                                                                    <% if(game.guess_b) { %>
+                                                                        <%= game.guess_a %>
+                                                                        <% }  else { %>   
+                                                                        <input class="form-control" name="team_<%= game.id %>[b]">
+                                                                        <% } %>
+                                                                   
+                                                            </td>
+                                                            <td><%= game.score %></td>
+                                                        </tr>
+                                                        <% }) %>
+                                                </tbody>
+                                            </table>
+                                            <input type="submit" class="btn btn-primary" value="Salvar Apostas">
+                                        </form>
+                                        <%  } %>
         </div>
     </section>
 

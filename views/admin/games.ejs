@@ -38,44 +38,57 @@
 
     <section class="content">
         <div class="container">
-                <h2>Gerenciamento de Jogos</h2>
-                <form class="row" method="post">
-                    <p class="h5 text-center mb-4">Criar um jogo</p>
+            <h2>Gerenciamento de Jogos</h2>
+            <form class="row" method="post">
+                <p class="h5 text-center mb-4">Criar um jogo</p>
 
-                    <div class="md-form">
-                        <i class="fa fa-user prefix grey-text"></i>
-                        <input type="text" id="team-a" class="form-control" name="team_a">
-                        <label for="team-a">Time A</label>
-                    </div>
-                    <div class="md-form">
-                        <i class="fa fa-envelope prefix grey-text"></i>
-                        <input type="text" id="team-b" class="form-control" name="team_b">
-                        <label for="team-b">Time B</label>
-                    </div>
-                  
-                    <div class="text-center">
-                        <button class="btn btn-deep-orange">Criar jogo</button>
-                    </div>
-                </form>
+                <div class="md-form">
+                    <i class="fa fa-user prefix grey-text"></i>
+                    <input type="text" id="team-a" class="form-control" name="team_a">
+                    <label for="team-a">Time A</label>
+                </div>
+                <div class="md-form">
+                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="text" id="team-b" class="form-control" name="team_b">
+                    <label for="team-b">Time B</label>
+                </div>
 
-                <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Jogos</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% games.forEach( game => { %>
-                            <tr>
-                                <th scope="row"><%= game.id %></th>
-                                <td><%= game.team_a %> vs <%= game.team_b %></td>
-                                <td><a href="/admin/games/delete/<%= game.id %>" alt="Excluir" >Excluir</a></td>
-                            </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
+                <div class="text-center">
+                    <button class="btn btn-deep-orange">Criar jogo</button>
+                </div>
+            </form>
+
+            <form method="post" action="/admin/games/results">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Jogos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% games.forEach( game => { %>
+                        <tr>
+                            <th scope="row">
+                                <%= game.id %>
+                            </th>
+                            <td>
+                              <input class="form-control" name="team_<%= game.id %>[a]">
+                               <%= game.team_a %> vs
+
+                                    <%= game.team_b %>
+                                    <input class="form-control" name="team_<%= game.id %>[a]">
+                            </td>
+                            <td>
+                                <a href="/admin/games/delete/<%= game.id %>" alt="Excluir">Excluir</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <input type="submit" value="Informar resultados" class="btn btn-primary" >
+        </form>
         </div>
     </section>
 
